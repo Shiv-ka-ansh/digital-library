@@ -154,7 +154,7 @@ $z-drawer: 400;
   align-items: center;
   gap: $spacing-3;
   padding: $spacing-4;
-  background: linear-gradient(135deg, $color-primary 0%, darken($color-primary, 10%) 100%);
+  background: linear-gradient(135deg, $color-primary 0%, #4f46e5 100%);
   border-radius: $radius-lg;
   color: white;
 
@@ -330,7 +330,7 @@ $z-drawer: 400;
     }
 
     &:hover {
-      background: darken($color-surface-alt, 2%);
+      background: #e9ecf1;
     }
 
     &:focus {

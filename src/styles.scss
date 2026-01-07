@@ -175,7 +175,7 @@ body {
   border-radius: $radius-full;
 
   &:hover {
-    background: darken($color-border, 10%);
+    background: #c9cdd3;
   }
 }
 
@@ -351,12 +351,12 @@ a {
 
   &--success {
     background: rgba($color-success, 0.15);
-    color: darken($color-success, 10%);
+    color: #16a34a;
   }
 
   &--warning {
     background: rgba($color-warning, 0.2);
-    color: darken($color-warning, 30%);
+    color: #a16207;
   }
 
   &--error {
@@ -366,7 +366,7 @@ a {
 
   &--accent {
     background: rgba($color-accent, 0.2);
-    color: darken($color-accent, 25%);
+    color: #d97706;
   }
 
   &__dot {

@@ -429,7 +429,7 @@ $content-max-width: 1440px;
 
   &--returned {
     background: rgba($color-success, 0.12);
-    color: darken($color-success, 10%);
+    color: #16a34a;
   }
 }
 
@@ -523,7 +523,7 @@ $content-max-width: 1440px;
 
     &--warning {
       background: rgba($color-warning, 0.2);
-      color: darken($color-warning, 20%);
+      color: #a16207;
     }
   }
 
@@ -587,17 +587,13 @@ $content-max-width: 1440px;
 
   &:first-child &__rank {
     background: rgba($color-warning, 0.2);
-    color: darken($color-warning, 30%);
+    color: #a16207;
   }
 
   &__cover {
     width: 44px;
     height: 56px;
-    background: linear-gradient(
-      135deg,
-      $color-primary-light 0%,
-      darken($color-primary-light, 5%) 100%
-    );
+    background: linear-gradient(135deg, $color-primary-light 0%, #c7d2fe 100%);
     color: $color-primary;
     border-radius: $radius-sm;
     display: flex;

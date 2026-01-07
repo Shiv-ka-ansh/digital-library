@@ -65,7 +65,7 @@ $content-max-width: 1440px;
   gap: $spacing-6;
   margin-bottom: $spacing-8;
   padding: $spacing-8;
-  background: linear-gradient(135deg, $color-primary 0%, darken($color-primary, 10%) 100%);
+  background: linear-gradient(135deg, $color-primary 0%, #4f46e5 100%);
   border-radius: $radius-2xl;
   color: white;
 
@@ -325,7 +325,7 @@ $content-max-width: 1440px;
       color: $color-success;
     }
     &--soon {
-      color: darken($color-warning, 10%);
+      color: #ca8a04;
     }
     &--urgent {
       color: $color-error;
@@ -379,11 +379,7 @@ $content-max-width: 1440px;
   &__cover {
     width: 48px;
     height: 60px;
-    background: linear-gradient(
-      135deg,
-      $color-primary-light 0%,
-      darken($color-primary-light, 5%) 100%
-    );
+    background: linear-gradient(135deg, $color-primary-light 0%, #c7d2fe 100%);
     color: $color-primary;
     border-radius: $radius-sm;
     display: flex;
@@ -448,7 +444,7 @@ $content-max-width: 1440px;
   gap: 2px;
   font-size: $font-size-xs;
   font-weight: $font-weight-medium;
-  color: darken($color-warning, 15%);
+  color: #a16207;
 
   mat-icon {
     font-size: 14px;
