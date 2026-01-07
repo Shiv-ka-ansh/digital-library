@@ -431,6 +431,33 @@ a {
 .mat-mdc-menu-panel {
   border-radius: $radius-lg !important;
   box-shadow: $shadow-lg !important;
+  background: $color-surface !important;
+  min-width: 180px;
+
+  .mat-mdc-menu-content {
+    padding: $spacing-2 0 !important;
+  }
+
+  .mat-mdc-menu-item {
+    height: 44px;
+    padding: 0 $spacing-4;
+    font-size: $font-size-sm;
+    color: $color-text-primary;
+
+    .mat-icon {
+      margin-right: $spacing-3;
+      color: $color-text-secondary;
+    }
+
+    &:hover {
+      background: $color-surface-alt;
+    }
+  }
+}
+
+// Ensure dropdown menus appear above other content
+.cdk-overlay-container {
+  z-index: 9999 !important;
 }
 
 .mat-mdc-snack-bar-container {
