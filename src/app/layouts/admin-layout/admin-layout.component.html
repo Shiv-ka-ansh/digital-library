@@ -1,0 +1,145 @@
+<div class="admin-layout">
+  <!-- Sidebar -->
+  <aside 
+    class="sidebar" 
+    [class.sidebar--collapsed]="isCollapsed()"
+    [style.width]="sidebarWidth()">
+    
+    <!-- Logo -->
+    <div class="sidebar__header">
+      <div class="sidebar__logo">
+        <mat-icon class="sidebar__logo-icon">local_library</mat-icon>
+        @if (!isCollapsed()) {
+          <span class="sidebar__logo-text">DigiLib</span>
+        }
+      </div>
+      <button 
+        mat-icon-button 
+        class="sidebar__toggle"
+        (click)="toggleSidebar()"
+        [matTooltip]="isCollapsed() ? 'Expand' : 'Collapse'">
+        <mat-icon>{{ isCollapsed() ? 'chevron_right' : 'chevron_left' }}</mat-icon>
+      </button>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="sidebar__nav">
+      @for (item of navItems; track item.route) {
+        <a 
+          class="nav-item"
+          [class.nav-item--active]="isActive(item.route)"
+          [routerLink]="item.route"
+          [matTooltip]="isCollapsed() ? item.label : ''"
+          matTooltipPosition="right">
+          <mat-icon 
+            class="nav-item__icon"
+            [matBadge]="item.badge" 
+            [matBadgeHidden]="!item.badge"
+            matBadgeColor="warn"
+            matBadgeSize="small">
+            {{ item.icon }}
+          </mat-icon>
+          @if (!isCollapsed()) {
+            <span class="nav-item__label">{{ item.label }}</span>
+            @if (item.badge) {
+              <span class="nav-item__badge">{{ item.badge }}</span>
+            }
+          }
+        </a>
+      }
+    </nav>
+
+    <!-- Footer -->
+    <div class="sidebar__footer">
+      <mat-divider></mat-divider>
+      <a 
+        class="nav-item"
+        [matTooltip]="isCollapsed() ? 'Help & Support' : ''"
+        matTooltipPosition="right">
+        <mat-icon class="nav-item__icon">help_outline</mat-icon>
+        @if (!isCollapsed()) {
+          <span class="nav-item__label">Help & Support</span>
+        }
+      </a>
+    </div>
+  </aside>
+
+  <!-- Main Content Area -->
+  <div class="main-wrapper" [class.main-wrapper--expanded]="isCollapsed()">
+    <!-- Top Bar -->
+    <header class="topbar">
+      <div class="topbar__left">
+        <!-- Breadcrumbs -->
+        <nav class="breadcrumbs">
+          <a routerLink="/admin/dashboard" class="breadcrumbs__item">
+            <mat-icon>home</mat-icon>
+          </a>
+          <mat-icon class="breadcrumbs__separator">chevron_right</mat-icon>
+          <span class="breadcrumbs__current">Dashboard</span>
+        </nav>
+      </div>
+
+      <div class="topbar__right">
+        <!-- Search -->
+        <div class="topbar__search">
+          <mat-icon class="topbar__search-icon">search</mat-icon>
+          <input 
+            type="text" 
+            placeholder="Search books, users..." 
+            class="topbar__search-input">
+        </div>
+
+        <!-- Notifications -->
+        <button mat-icon-button class="topbar__action" [matMenuTriggerFor]="notificationMenu">
+          <mat-icon matBadge="5" matBadgeColor="warn" matBadgeSize="small">notifications</mat-icon>
+        </button>
+        <mat-menu #notificationMenu="matMenu" class="notification-menu">
+          <div class="menu-header">
+            <span>Notifications</span>
+            <a href="#">Mark all read</a>
+          </div>
+          <mat-divider></mat-divider>
+          <button mat-menu-item>
+            <mat-icon color="warn">warning</mat-icon>
+            <span>3 books overdue</span>
+          </button>
+          <button mat-menu-item>
+            <mat-icon color="primary">person_add</mat-icon>
+            <span>New user registration</span>
+          </button>
+          <button mat-menu-item>
+            <mat-icon color="accent">book</mat-icon>
+            <span>Book return request</span>
+          </button>
+        </mat-menu>
+
+        <!-- User Menu -->
+        <button mat-button class="topbar__user" [matMenuTriggerFor]="userMenu">
+          <div class="avatar avatar--sm">AD</div>
+          <span class="topbar__user-name hide-mobile">Admin</span>
+          <mat-icon>expand_more</mat-icon>
+        </button>
+        <mat-menu #userMenu="matMenu">
+          <button mat-menu-item routerLink="/admin/profile">
+            <mat-icon>person</mat-icon>
+            <span>Profile</span>
+          </button>
+          <button mat-menu-item routerLink="/admin/settings">
+            <mat-icon>settings</mat-icon>
+            <span>Settings</span>
+          </button>
+          <mat-divider></mat-divider>
+          <button mat-menu-item (click)="logout()">
+            <mat-icon>logout</mat-icon>
+            <span>Logout</span>
+          </button>
+        </mat-menu>
+      </div>
+    </header>
+
+    <!-- Page Content -->
+    <main class="main-content">
+      <router-outlet></router-outlet>
+    </main>
+  </div>
+</div>

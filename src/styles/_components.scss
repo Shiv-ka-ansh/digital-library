@@ -1,0 +1,552 @@
+// ============================================
+// DIGITAL LIBRARY - GLOBAL COMPONENT STYLES
+// ============================================
+
+@use 'variables' as *;
+@use 'mixins' as *;
+
+// ============================================
+// BUTTONS
+// ============================================
+
+.btn {
+  @include button-base;
+  padding: $spacing-3 $spacing-5;
+  min-height: 44px; // Accessibility minimum touch target
+
+  &--primary {
+    @include button-primary;
+  }
+
+  &--secondary {
+    @include button-secondary;
+  }
+
+  &--outline {
+    @include button-outline;
+  }
+
+  &--ghost {
+    @include button-ghost;
+  }
+
+  &--danger {
+    background: $color-error;
+    color: white;
+
+    &:hover:not(:disabled) {
+      background: darken($color-error, 8%);
+      box-shadow: $shadow-error;
+    }
+  }
+
+  &--success {
+    background: $color-success;
+    color: white;
+
+    &:hover:not(:disabled) {
+      background: darken($color-success, 8%);
+      box-shadow: $shadow-success;
+    }
+  }
+
+  // Sizes
+  &--sm {
+    padding: $spacing-2 $spacing-3;
+    font-size: $font-size-xs;
+    min-height: 32px;
+    border-radius: $radius-md;
+  }
+
+  &--lg {
+    padding: $spacing-4 $spacing-6;
+    font-size: $font-size-base;
+    min-height: 52px;
+  }
+
+  // Full Width
+  &--block {
+    width: 100%;
+  }
+
+  // Icon Only
+  &--icon {
+    padding: $spacing-3;
+    min-width: 44px;
+    min-height: 44px;
+
+    &.btn--sm {
+      padding: $spacing-2;
+      min-width: 32px;
+      min-height: 32px;
+    }
+  }
+
+  // Loading State
+  &--loading {
+    position: relative;
+    color: transparent !important;
+    pointer-events: none;
+
+    &::after {
+      content: '';
+      position: absolute;
+      width: 18px;
+      height: 18px;
+      border: 2px solid transparent;
+      border-top-color: currentColor;
+      border-radius: 50%;
+      animation: spin 0.6s linear infinite;
+    }
+  }
+}
+
+// Icon inside button
+.btn-icon {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
+// ============================================
+// CARDS
+// ============================================
+
+.card {
+  @include card-base;
+  padding: $spacing-6;
+  position: relative;
+  overflow: hidden;
+
+  &--glass {
+    @include glass-card;
+  }
+
+  &--hoverable {
+    @include card-hover;
+    cursor: pointer;
+  }
+
+  &--bordered {
+    box-shadow: none;
+    border: 1px solid $color-border;
+
+    &:hover {
+      border-color: $color-primary-light;
+    }
+  }
+
+  &__header {
+    @include flex-between;
+    margin-bottom: $spacing-4;
+    padding-bottom: $spacing-4;
+    border-bottom: 1px solid $color-border;
+  }
+
+  &__title {
+    font-size: $font-size-lg;
+    font-weight: $font-weight-semibold;
+    color: $color-text-primary;
+  }
+
+  &__subtitle {
+    font-size: $font-size-sm;
+    color: $color-text-muted;
+    margin-top: $spacing-1;
+  }
+
+  &__body {
+    flex: 1;
+  }
+
+  &__footer {
+    margin-top: $spacing-4;
+    padding-top: $spacing-4;
+    border-top: 1px solid $color-border;
+    @include flex-between;
+  }
+}
+
+// ============================================
+// BADGES
+// ============================================
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: $spacing-1;
+  padding: $spacing-1 $spacing-3;
+  font-size: $font-size-xs;
+  font-weight: $font-weight-medium;
+  border-radius: $radius-full;
+  line-height: 1.4;
+
+  &--primary {
+    background: $color-primary-light;
+    color: $color-primary-dark;
+  }
+
+  &--secondary {
+    background: rgba($color-secondary, 0.15);
+    color: darken($color-secondary, 15%);
+  }
+
+  &--accent {
+    background: rgba($color-accent, 0.2);
+    color: darken($color-accent, 25%);
+  }
+
+  &--success {
+    background: rgba($color-success, 0.15);
+    color: darken($color-success, 10%);
+  }
+
+  &--warning {
+    background: rgba($color-warning, 0.2);
+    color: darken($color-warning, 30%);
+  }
+
+  &--error {
+    background: rgba($color-error, 0.15);
+    color: $color-error;
+  }
+
+  &--neutral {
+    background: $color-surface-alt;
+    color: $color-text-secondary;
+  }
+
+  // Dot indicator
+  &__dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: currentColor;
+  }
+}
+
+// ============================================
+// FORM INPUTS
+// ============================================
+
+.form-group {
+  margin-bottom: $spacing-5;
+}
+
+.form-label {
+  display: block;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+  color: $color-text-primary;
+  margin-bottom: $spacing-2;
+}
+
+.form-input {
+  @include input-base;
+}
+
+.form-textarea {
+  @include input-base;
+  min-height: 120px;
+  resize: vertical;
+}
+
+.form-select {
+  @include input-base;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2394A3B8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right $spacing-4 center;
+  padding-right: $spacing-10;
+  cursor: pointer;
+}
+
+.form-hint {
+  font-size: $font-size-xs;
+  color: $color-text-muted;
+  margin-top: $spacing-2;
+}
+
+.form-error {
+  font-size: $font-size-xs;
+  color: $color-error;
+  margin-top: $spacing-2;
+  @include flex-start;
+  gap: $spacing-1;
+}
+
+// Input with icon
+.input-group {
+  position: relative;
+
+  .input-icon {
+    position: absolute;
+    left: $spacing-4;
+    top: 50%;
+    transform: translateY(-50%);
+    color: $color-text-muted;
+    pointer-events: none;
+    width: 20px;
+    height: 20px;
+  }
+
+  .form-input {
+    padding-left: $spacing-10;
+  }
+}
+
+// ============================================
+// SEARCH INPUT
+// ============================================
+
+.search-input {
+  position: relative;
+
+  input {
+    @include input-base;
+    padding-left: $spacing-10;
+    padding-right: $spacing-10;
+    border-radius: $radius-full;
+    background: $color-surface;
+
+    &:focus {
+      background: $color-surface;
+    }
+  }
+
+  &__icon {
+    position: absolute;
+    left: $spacing-4;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
+    color: $color-text-muted;
+    pointer-events: none;
+  }
+
+  &__clear {
+    position: absolute;
+    right: $spacing-3;
+    top: 50%;
+    transform: translateY(-50%);
+    @include button-ghost;
+    padding: $spacing-2;
+    border-radius: 50%;
+    min-width: auto;
+    min-height: auto;
+  }
+}
+
+// ============================================
+// SKELETON LOADERS
+// ============================================
+
+.skeleton {
+  @include skeleton;
+
+  &--text {
+    height: 1em;
+    width: 100%;
+  }
+
+  &--title {
+    height: 1.5em;
+    width: 60%;
+  }
+
+  &--avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+  }
+
+  &--card {
+    height: 200px;
+    border-radius: $radius-xl;
+  }
+
+  &--button {
+    height: 44px;
+    width: 120px;
+    border-radius: $radius-lg;
+  }
+}
+
+// ============================================
+// EMPTY STATES
+// ============================================
+
+.empty-state {
+  @include flex-col-center;
+  padding: $spacing-16 $spacing-8;
+  text-align: center;
+
+  &__icon {
+    width: 80px;
+    height: 80px;
+    color: $color-text-muted;
+    margin-bottom: $spacing-6;
+    opacity: 0.5;
+  }
+
+  &__title {
+    font-size: $font-size-xl;
+    font-weight: $font-weight-semibold;
+    color: $color-text-primary;
+    margin-bottom: $spacing-2;
+  }
+
+  &__description {
+    font-size: $font-size-base;
+    color: $color-text-muted;
+    max-width: 400px;
+    margin-bottom: $spacing-6;
+  }
+}
+
+// ============================================
+// ALERTS
+// ============================================
+
+.alert {
+  @include flex-start;
+  gap: $spacing-3;
+  padding: $spacing-4;
+  border-radius: $radius-lg;
+  font-size: $font-size-sm;
+
+  &--info {
+    background: rgba($color-secondary, 0.1);
+    color: darken($color-secondary, 20%);
+    border: 1px solid rgba($color-secondary, 0.3);
+  }
+
+  &--success {
+    background: rgba($color-success, 0.1);
+    color: darken($color-success, 15%);
+    border: 1px solid rgba($color-success, 0.3);
+  }
+
+  &--warning {
+    background: rgba($color-warning, 0.15);
+    color: darken($color-warning, 35%);
+    border: 1px solid rgba($color-warning, 0.4);
+  }
+
+  &--error {
+    background: rgba($color-error, 0.1);
+    color: $color-error;
+    border: 1px solid rgba($color-error, 0.3);
+  }
+
+  &__icon {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+  }
+
+  &__content {
+    flex: 1;
+  }
+
+  &__title {
+    font-weight: $font-weight-semibold;
+    margin-bottom: $spacing-1;
+  }
+}
+
+// ============================================
+// DIVIDERS
+// ============================================
+
+.divider {
+  height: 1px;
+  background: $color-border;
+  margin: $spacing-4 0;
+
+  &--lg {
+    margin: $spacing-8 0;
+  }
+}
+
+// ============================================
+// AVATAR
+// ============================================
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: $color-primary-light;
+  color: $color-primary;
+  @include flex-center;
+  font-weight: $font-weight-semibold;
+  font-size: $font-size-sm;
+  overflow: hidden;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  &--sm {
+    width: 32px;
+    height: 32px;
+    font-size: $font-size-xs;
+  }
+
+  &--lg {
+    width: 56px;
+    height: 56px;
+    font-size: $font-size-lg;
+  }
+
+  &--xl {
+    width: 80px;
+    height: 80px;
+    font-size: $font-size-2xl;
+  }
+}
+
+// ============================================
+// TOOLTIPS (shown on hover via CSS)
+// ============================================
+
+.tooltip-wrapper {
+  position: relative;
+
+  &:hover .tooltip {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+.tooltip {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%) translateY(4px);
+  background: $color-text-primary;
+  color: $color-surface;
+  padding: $spacing-2 $spacing-3;
+  border-radius: $radius-md;
+  font-size: $font-size-xs;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  transition: all $transition-fast;
+  z-index: $z-tooltip;
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 6px solid transparent;
+    border-top-color: $color-text-primary;
+  }
+}

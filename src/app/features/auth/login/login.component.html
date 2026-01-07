@@ -1,0 +1,102 @@
+<div class="login-container">
+    <!-- Header -->
+    <div class="login-header">
+        <h2 class="login-header__title">Welcome back</h2>
+        <p class="login-header__subtitle">Sign in to continue to your library</p>
+    </div>
+
+    <!-- Error Message -->
+    @if (errorMessage()) {
+    <div class="error-alert">
+        <mat-icon>error</mat-icon>
+        <span>{{ errorMessage() }}</span>
+    </div>
+    }
+
+    <!-- Login Form -->
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
+        <mat-form-field appearance="outline" class="form-field">
+            <mat-label>Email address</mat-label>
+            <input matInput type="email" formControlName="email" placeholder="you@example.com">
+            <mat-icon matPrefix>mail</mat-icon>
+            @if (loginForm.get('email')?.hasError('required') && loginForm.get('email')?.touched) {
+            <mat-error>Email is required</mat-error>
+            }
+            @if (loginForm.get('email')?.hasError('email') && loginForm.get('email')?.touched) {
+            <mat-error>Please enter a valid email</mat-error>
+            }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="form-field">
+            <mat-label>Password</mat-label>
+            <input matInput [type]="showPassword() ? 'text' : 'password'" formControlName="password"
+                placeholder="Enter your password">
+            <mat-icon matPrefix>lock</mat-icon>
+            <button mat-icon-button matSuffix type="button" (click)="togglePasswordVisibility()">
+                <mat-icon>{{ showPassword() ? 'visibility_off' : 'visibility' }}</mat-icon>
+            </button>
+            @if (loginForm.get('password')?.hasError('required') && loginForm.get('password')?.touched) {
+            <mat-error>Password is required</mat-error>
+            }
+            @if (loginForm.get('password')?.hasError('minlength') && loginForm.get('password')?.touched) {
+            <mat-error>Password must be at least 6 characters</mat-error>
+            }
+        </mat-form-field>
+
+        <div class="form-options">
+            <mat-checkbox formControlName="rememberMe" color="primary">
+                Remember me
+            </mat-checkbox>
+            <a routerLink="/forgot-password" class="forgot-link">Forgot password?</a>
+        </div>
+
+        <button mat-raised-button color="primary" type="submit" class="submit-btn" [disabled]="isLoading()">
+            @if (isLoading()) {
+            <mat-spinner diameter="20"></mat-spinner>
+            <span>Signing in...</span>
+            } @else {
+            <ng-container>
+                <span>Sign in</span>
+                <mat-icon>arrow_forward</mat-icon>
+            </ng-container>
+            }
+        </button>
+    </form>
+
+    <!-- Demo Info -->
+    <div class="demo-info">
+        <p><strong>Demo:</strong> Use "admin@demo.com" for admin access</p>
+    </div>
+
+    <!-- Divider -->
+    <div class="divider">
+        <span>or continue with</span>
+    </div>
+
+    <!-- Social Login -->
+    <div class="social-buttons">
+        <button mat-stroked-button class="social-btn" type="button" (click)="loginWithGoogle()"
+            [disabled]="isLoading()">
+            <svg width="20" height="20" viewBox="0 0 24 24">
+                <path fill="#4285F4"
+                    d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
+                <path fill="#34A853"
+                    d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" />
+                <path fill="#FBBC05"
+                    d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" />
+                <path fill="#EA4335"
+                    d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" />
+            </svg>
+            <span>Google</span>
+        </button>
+        <button mat-stroked-button class="social-btn" type="button" (click)="loginWithSSO()" [disabled]="isLoading()">
+            <mat-icon>badge</mat-icon>
+            <span>SSO</span>
+        </button>
+    </div>
+
+    <!-- Footer -->
+    <div class="login-footer">
+        <p>Don't have an account? <a routerLink="/register">Sign up</a></p>
+    </div>
+</div>

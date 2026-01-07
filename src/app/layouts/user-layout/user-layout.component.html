@@ -1,0 +1,135 @@
+<div class="user-layout">
+    <!-- Sidebar -->
+    <aside class="sidebar" [class.sidebar--collapsed]="isCollapsed()" [style.width]="sidebarWidth()">
+
+        <!-- Logo -->
+        <div class="sidebar__header">
+            <div class="sidebar__logo">
+                <mat-icon class="sidebar__logo-icon">local_library</mat-icon>
+                @if (!isCollapsed()) {
+                <span class="sidebar__logo-text">DigiLib</span>
+                }
+            </div>
+            <button mat-icon-button class="sidebar__toggle hide-mobile" (click)="toggleSidebar()"
+                [matTooltip]="isCollapsed() ? 'Expand' : 'Collapse'">
+                <mat-icon>{{ isCollapsed() ? 'chevron_right' : 'chevron_left' }}</mat-icon>
+            </button>
+        </div>
+
+        <!-- Navigation -->
+        <nav class="sidebar__nav">
+            @for (item of navItems; track item.route) {
+            <a class="nav-item" [class.nav-item--active]="isActive(item.route)" [routerLink]="item.route"
+                [matTooltip]="isCollapsed() ? item.label : ''" matTooltipPosition="right">
+                <mat-icon class="nav-item__icon" [matBadge]="item.badge" [matBadgeHidden]="!item.badge"
+                    matBadgeColor="accent" matBadgeSize="small">
+                    {{ item.icon }}
+                </mat-icon>
+                @if (!isCollapsed()) {
+                <span class="nav-item__label">{{ item.label }}</span>
+                @if (item.badge) {
+                <span class="nav-item__badge">{{ item.badge }}</span>
+                }
+                }
+            </a>
+            }
+        </nav>
+
+        <!-- Quick Actions -->
+        @if (!isCollapsed()) {
+        <div class="sidebar__quick-actions">
+            <div class="quick-actions-card">
+                <mat-icon class="quick-actions-card__icon">book</mat-icon>
+                <div class="quick-actions-card__content">
+                    <span class="quick-actions-card__title">2 Books Due</span>
+                    <span class="quick-actions-card__subtitle">Return by Jan 15</span>
+                </div>
+            </div>
+        </div>
+        }
+
+        <!-- Footer -->
+        <div class="sidebar__footer">
+            <mat-divider></mat-divider>
+            <a class="nav-item" [matTooltip]="isCollapsed() ? 'Help' : ''" matTooltipPosition="right">
+                <mat-icon class="nav-item__icon">help_outline</mat-icon>
+                @if (!isCollapsed()) {
+                <span class="nav-item__label">Help Center</span>
+                }
+            </a>
+        </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <div class="main-wrapper" [class.main-wrapper--expanded]="isCollapsed()">
+        <!-- Top Bar -->
+        <header class="topbar">
+            <div class="topbar__left">
+                <!-- Mobile Menu Toggle -->
+                <button mat-icon-button class="topbar__menu-btn hide-desktop">
+                    <mat-icon>menu</mat-icon>
+                </button>
+
+                <!-- Search -->
+                <div class="topbar__search">
+                    <mat-icon class="topbar__search-icon">search</mat-icon>
+                    <input type="text" placeholder="Search for books, authors..." class="topbar__search-input">
+                </div>
+            </div>
+
+            <div class="topbar__right">
+                <!-- Quick Issue Button -->
+                <button mat-raised-button color="primary" class="topbar__cta hide-mobile">
+                    <mat-icon>add</mat-icon>
+                    Issue Book
+                </button>
+
+                <!-- Notifications -->
+                <button mat-icon-button class="topbar__action" [matMenuTriggerFor]="notificationMenu">
+                    <mat-icon matBadge="2" matBadgeColor="accent" matBadgeSize="small">notifications</mat-icon>
+                </button>
+                <mat-menu #notificationMenu="matMenu">
+                    <div class="menu-header">
+                        <span>Notifications</span>
+                    </div>
+                    <mat-divider></mat-divider>
+                    <button mat-menu-item>
+                        <mat-icon color="warn">schedule</mat-icon>
+                        <span>"Clean Code" due in 2 days</span>
+                    </button>
+                    <button mat-menu-item>
+                        <mat-icon color="primary">check_circle</mat-icon>
+                        <span>Book reserved successfully</span>
+                    </button>
+                </mat-menu>
+
+                <!-- User Menu -->
+                <button mat-button class="topbar__user" [matMenuTriggerFor]="userMenu">
+                    <div class="avatar avatar--sm">JD</div>
+                    <span class="topbar__user-name hide-mobile">John Doe</span>
+                    <mat-icon>expand_more</mat-icon>
+                </button>
+                <mat-menu #userMenu="matMenu">
+                    <button mat-menu-item routerLink="/user/profile">
+                        <mat-icon>person</mat-icon>
+                        <span>My Profile</span>
+                    </button>
+                    <button mat-menu-item routerLink="/user/settings">
+                        <mat-icon>settings</mat-icon>
+                        <span>Settings</span>
+                    </button>
+                    <mat-divider></mat-divider>
+                    <button mat-menu-item (click)="logout()">
+                        <mat-icon>logout</mat-icon>
+                        <span>Logout</span>
+                    </button>
+                </mat-menu>
+            </div>
+        </header>
+
+        <!-- Page Content -->
+        <main class="main-content">
+            <router-outlet></router-outlet>
+        </main>
+    </div>
+</div>

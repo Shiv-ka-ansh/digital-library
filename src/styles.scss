@@ -1,1 +1,455 @@
-/* You can add global styles to this file, and also import other style files */
+// ============================================
+// DIGITAL LIBRARY - MAIN STYLES
+// ============================================
+// Modern, calm, study-friendly design
+// Version: 1.0.0 | 2025-26 Design Trends
+
+// Angular Material Theme - MUST be first
+@use '@angular/material' as mat;
+
+// Google Fonts - Inter
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+// ============================================
+// DESIGN SYSTEM VARIABLES (inline for component compatibility)
+// ============================================
+
+// Color Palette
+$color-primary: #6366f1;
+$color-primary-light: #e0e7ff;
+$color-primary-dark: #4338ca;
+$color-secondary: #38bdf8;
+$color-accent: #fdba74;
+$color-success: #22c55e;
+$color-warning: #facc15;
+$color-error: #ef4444;
+$color-background: #f9fafb;
+$color-surface: #ffffff;
+$color-surface-alt: #f1f5f9;
+$color-border: #e5e7eb;
+$color-text-primary: #0f172a;
+$color-text-secondary: #475569;
+$color-text-muted: #94a3b8;
+
+// Typography
+$font-family-base: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+$font-weight-regular: 400;
+$font-weight-medium: 500;
+$font-weight-semibold: 600;
+$font-weight-bold: 700;
+$font-size-xs: 0.75rem;
+$font-size-sm: 0.875rem;
+$font-size-base: 1rem;
+$font-size-lg: 1.125rem;
+$font-size-xl: 1.25rem;
+$font-size-2xl: 1.5rem;
+$font-size-3xl: 1.875rem;
+$font-size-4xl: 2.25rem;
+$line-height-normal: 1.5;
+
+// Spacing
+$spacing-1: 0.25rem;
+$spacing-2: 0.5rem;
+$spacing-3: 0.75rem;
+$spacing-4: 1rem;
+$spacing-5: 1.25rem;
+$spacing-6: 1.5rem;
+$spacing-8: 2rem;
+$spacing-10: 2.5rem;
+$spacing-12: 3rem;
+$spacing-16: 4rem;
+
+// Border Radius
+$radius-sm: 0.375rem;
+$radius-md: 0.5rem;
+$radius-lg: 0.75rem;
+$radius-xl: 1rem;
+$radius-2xl: 1.5rem;
+$radius-full: 9999px;
+
+// Shadows
+$shadow-sm: 0 1px 3px 0 rgba(15, 23, 42, 0.08), 0 1px 2px -1px rgba(15, 23, 42, 0.08);
+$shadow-md: 0 4px 6px -1px rgba(15, 23, 42, 0.08), 0 2px 4px -2px rgba(15, 23, 42, 0.08);
+$shadow-lg: 0 10px 15px -3px rgba(15, 23, 42, 0.08), 0 4px 6px -4px rgba(15, 23, 42, 0.08);
+$shadow-primary: 0 4px 14px -2px rgba(99, 102, 241, 0.25);
+
+// Transitions
+$transition-fast: 120ms ease-out;
+$transition-base: 180ms ease-out;
+
+// Layout
+$sidebar-width-expanded: 280px;
+$sidebar-width-collapsed: 72px;
+$topbar-height: 64px;
+$content-max-width: 1440px;
+
+// Z-index
+$z-sticky: 200;
+$z-drawer: 400;
+$z-modal: 600;
+$z-tooltip: 800;
+
+// ============================================
+// CUSTOM MATERIAL THEME
+// ============================================
+
+$library-primary-palette: (
+  50: #eef2ff,
+  100: #e0e7ff,
+  200: #c7d2fe,
+  300: #a5b4fc,
+  400: #818cf8,
+  500: #6366f1,
+  600: #4f46e5,
+  700: #4338ca,
+  800: #3730a3,
+  900: #312e81,
+  contrast: (
+    50: #0f172a,
+    100: #0f172a,
+    200: #0f172a,
+    300: #0f172a,
+    400: #ffffff,
+    500: #ffffff,
+    600: #ffffff,
+    700: #ffffff,
+    800: #ffffff,
+    900: #ffffff,
+  ),
+);
+
+html {
+  height: 100%;
+
+  @include mat.theme(
+    (
+      color: (
+        primary: $library-primary-palette,
+      ),
+      typography: Inter,
+      density: 0,
+    )
+  );
+}
+
+// ============================================
+// GLOBAL RESETS & BASE STYLES
+// ============================================
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: $font-family-base;
+  font-size: $font-size-base;
+  line-height: $line-height-normal;
+  color: $color-text-primary;
+  background-color: $color-background;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color-scheme: light;
+}
+
+// Scrollbar
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: $color-border;
+  border-radius: $radius-full;
+
+  &:hover {
+    background: darken($color-border, 10%);
+  }
+}
+
+// ============================================
+// TYPOGRAPHY
+// ============================================
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: $font-weight-semibold;
+  line-height: 1.25;
+  color: $color-text-primary;
+  margin: 0;
+}
+
+a {
+  color: $color-primary;
+  text-decoration: none;
+
+  &:hover {
+    color: $color-primary-dark;
+  }
+}
+
+// ============================================
+// ANIMATIONS
+// ============================================
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes skeleton-loading {
+  0% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0 50%;
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+// ============================================
+// UTILITY CLASSES
+// ============================================
+
+.flex {
+  display: flex;
+}
+.flex-col {
+  flex-direction: column;
+}
+.items-center {
+  align-items: center;
+}
+.justify-center {
+  justify-content: center;
+}
+.justify-between {
+  justify-content: space-between;
+}
+.gap-2 {
+  gap: $spacing-2;
+}
+.gap-3 {
+  gap: $spacing-3;
+}
+.gap-4 {
+  gap: $spacing-4;
+}
+
+.text-primary {
+  color: $color-text-primary;
+}
+.text-secondary {
+  color: $color-text-secondary;
+}
+.text-muted {
+  color: $color-text-muted;
+}
+.text-error {
+  color: $color-error;
+}
+
+.bg-surface {
+  background: $color-surface;
+}
+.bg-surface-alt {
+  background: $color-surface-alt;
+}
+
+.rounded-lg {
+  border-radius: $radius-lg;
+}
+.rounded-xl {
+  border-radius: $radius-xl;
+}
+
+.shadow-sm {
+  box-shadow: $shadow-sm;
+}
+.shadow-md {
+  box-shadow: $shadow-md;
+}
+
+.hide-mobile {
+  @media (max-width: 767px) {
+    display: none !important;
+  }
+}
+
+.hide-desktop {
+  @media (min-width: 768px) {
+    display: none !important;
+  }
+}
+
+// ============================================
+// COMPONENT STYLES
+// ============================================
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: $color-primary-light;
+  color: $color-primary;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: $font-weight-semibold;
+  font-size: $font-size-sm;
+
+  &--sm {
+    width: 32px;
+    height: 32px;
+    font-size: $font-size-xs;
+  }
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: $spacing-1;
+  padding: $spacing-1 $spacing-3;
+  font-size: $font-size-xs;
+  font-weight: $font-weight-medium;
+  border-radius: $radius-full;
+
+  &--primary {
+    background: $color-primary-light;
+    color: $color-primary-dark;
+  }
+
+  &--success {
+    background: rgba($color-success, 0.15);
+    color: darken($color-success, 10%);
+  }
+
+  &--warning {
+    background: rgba($color-warning, 0.2);
+    color: darken($color-warning, 30%);
+  }
+
+  &--error {
+    background: rgba($color-error, 0.15);
+    color: $color-error;
+  }
+
+  &--accent {
+    background: rgba($color-accent, 0.2);
+    color: darken($color-accent, 25%);
+  }
+
+  &__dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: currentColor;
+  }
+}
+
+.card {
+  background: $color-surface;
+  border-radius: $radius-xl;
+  box-shadow: $shadow-sm;
+  transition: box-shadow $transition-base;
+
+  &:hover {
+    box-shadow: $shadow-md;
+  }
+}
+
+// ============================================
+// ANGULAR MATERIAL OVERRIDES
+// ============================================
+
+.mat-mdc-button,
+.mat-mdc-raised-button,
+.mat-mdc-outlined-button,
+.mat-mdc-flat-button {
+  font-family: $font-family-base !important;
+  font-weight: $font-weight-medium !important;
+  letter-spacing: normal !important;
+  border-radius: $radius-lg !important;
+  text-transform: none !important;
+}
+
+.mat-mdc-card {
+  border-radius: $radius-xl !important;
+  box-shadow: $shadow-sm !important;
+}
+
+.mat-mdc-form-field {
+  font-family: $font-family-base !important;
+}
+
+.mat-mdc-dialog-container {
+  --mdc-dialog-container-shape: #{$radius-2xl} !important;
+}
+
+.mat-mdc-table {
+  background: transparent !important;
+
+  .mat-mdc-header-row {
+    background: $color-surface-alt;
+  }
+
+  .mat-mdc-row:hover {
+    background: rgba($color-primary, 0.04);
+  }
+}
+
+.mat-mdc-menu-panel {
+  border-radius: $radius-lg !important;
+  box-shadow: $shadow-lg !important;
+}
+
+.mat-mdc-snack-bar-container {
+  border-radius: $radius-lg !important;
+}
+
+// Focus styles
+*:focus-visible {
+  outline: 2px solid $color-primary;
+  outline-offset: 2px;
+}
+
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+// Print
+@media print {
+  .no-print {
+    display: none !important;
+  }
+}

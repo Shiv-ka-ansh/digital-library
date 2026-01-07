@@ -1,0 +1,144 @@
+<div class="user-dashboard">
+    <!-- Welcome Header -->
+    <header class="welcome-header">
+        <div class="welcome-header__content">
+            <h1 class="welcome-header__greeting">{{ greeting() }}, {{ userName() }}! 👋</h1>
+            <p class="welcome-header__subtitle">Ready to discover your next great read?</p>
+        </div>
+        <div class="welcome-header__action">
+            <button mat-raised-button color="primary" routerLink="/user/browse">
+                <mat-icon>search</mat-icon>
+                Browse Library
+            </button>
+        </div>
+    </header>
+
+    <!-- Stats Row -->
+    <section class="stats-row">
+        @for (stat of stats; track stat.label) {
+        <div class="mini-stat">
+            <div class="mini-stat__icon">
+                <mat-icon>{{ stat.icon }}</mat-icon>
+            </div>
+            <div class="mini-stat__content">
+                <span class="mini-stat__value">{{ stat.value }}</span>
+                <span class="mini-stat__label">{{ stat.label }}</span>
+            </div>
+        </div>
+        }
+    </section>
+
+    <!-- Main Content Grid -->
+    <div class="dashboard-grid">
+        <!-- Currently Reading -->
+        <section class="current-books">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <mat-icon>auto_stories</mat-icon>
+                    Currently Reading
+                </h2>
+                <a routerLink="/user/my-books" class="section-link">View All</a>
+            </div>
+
+            <div class="book-cards">
+                @for (book of issuedBooks; track book.id) {
+                <div class="book-card">
+                    <div class="book-card__cover" [style.background]="book.coverColor">
+                        <mat-icon>menu_book</mat-icon>
+                    </div>
+                    <div class="book-card__content">
+                        <h3 class="book-card__title">{{ book.title }}</h3>
+                        <p class="book-card__author">{{ book.author }}</p>
+
+                        <div class="book-card__progress">
+                            <div class="progress-header">
+                                <span>Reading Progress</span>
+                                <span>{{ book.progress }}%</span>
+                            </div>
+                            <mat-progress-bar mode="determinate" [value]="book.progress"></mat-progress-bar>
+                        </div>
+
+                        <div class="book-card__due" [class]="'book-card__due--' + getDueStatus(book.daysLeft)">
+                            <mat-icon>schedule</mat-icon>
+                            <span>{{ book.daysLeft }} days left</span>
+                        </div>
+                    </div>
+
+                    <div class="book-card__actions">
+                        <button mat-stroked-button>
+                            <mat-icon>replay</mat-icon>
+                            Return
+                        </button>
+                        <button mat-icon-button>
+                            <mat-icon>more_vert</mat-icon>
+                        </button>
+                    </div>
+                </div>
+                }
+
+                @if (issuedBooks.length === 0) {
+                <div class="empty-state">
+                    <mat-icon class="empty-state__icon">menu_book</mat-icon>
+                    <h3 class="empty-state__title">No books issued</h3>
+                    <p class="empty-state__text">Start exploring our library to find your next read!</p>
+                    <button mat-raised-button color="primary" routerLink="/user/browse">
+                        Browse Books
+                    </button>
+                </div>
+                }
+            </div>
+        </section>
+
+        <!-- Recommendations Sidebar -->
+        <aside class="recommendations">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <mat-icon>auto_awesome</mat-icon>
+                    Recommended
+                </h2>
+            </div>
+
+            <div class="recommendation-list">
+                @for (book of recommendedBooks; track book.id) {
+                <div class="recommendation-item">
+                    <div class="recommendation-item__cover">
+                        <mat-icon>menu_book</mat-icon>
+                    </div>
+                    <div class="recommendation-item__info">
+                        <h4 class="recommendation-item__title">{{ book.title }}</h4>
+                        <p class="recommendation-item__author">{{ book.author }}</p>
+                        <div class="recommendation-item__meta">
+                            <span class="category-tag">{{ book.category }}</span>
+                            <span class="rating">
+                                <mat-icon>star</mat-icon>
+                                {{ book.rating }}
+                            </span>
+                        </div>
+                    </div>
+                    <button mat-icon-button class="recommendation-item__action">
+                        <mat-icon>bookmark_border</mat-icon>
+                    </button>
+                </div>
+                }
+            </div>
+        </aside>
+    </div>
+
+    <!-- Quick Browse Categories -->
+    <section class="categories-section">
+        <div class="section-header">
+            <h2 class="section-title">
+                <mat-icon>category</mat-icon>
+                Quick Browse
+            </h2>
+        </div>
+        <div class="categories-grid">
+            @for (category of recentCategories; track category) {
+            <a class="category-card" [routerLink]="['/user/browse']" [queryParams]="{category: category}">
+                <mat-icon>folder</mat-icon>
+                <span>{{ category }}</span>
+            </a>
+            }
+        </div>
+    </section>
+</div>

@@ -1,0 +1,255 @@
+<div class="admin-dashboard">
+    <!-- Page Header -->
+    <header class="page-header">
+        <div class="page-header__left">
+            <h1 class="page-header__title">Dashboard</h1>
+            <p class="page-header__subtitle">Welcome back, Admin! Here's what's happening today.</p>
+        </div>
+        <div class="page-header__actions">
+            <button mat-stroked-button [matMenuTriggerFor]="dateMenu">
+                <mat-icon>calendar_today</mat-icon>
+                {{ selectedPeriod() }}
+                <mat-icon>arrow_drop_down</mat-icon>
+            </button>
+            <mat-menu #dateMenu="matMenu">
+                @for (period of periodOptions; track period) {
+                <button mat-menu-item (click)="selectPeriod(period)" [class.active]="selectedPeriod() === period">
+                    {{ period }}
+                </button>
+                }
+            </mat-menu>
+            <button mat-raised-button color="primary">
+                <mat-icon>download</mat-icon>
+                Export Report
+            </button>
+        </div>
+    </header>
+
+    <!-- Stats Grid -->
+    <section class="stats-grid">
+        @for (stat of stats; track stat.title) {
+        <div class="stat-card" [class]="'stat-card--' + stat.color">
+            <div class="stat-card__header">
+                <div class="stat-card__icon-wrapper">
+                    <mat-icon class="stat-card__icon">{{ stat.icon }}</mat-icon>
+                </div>
+                <button mat-icon-button class="stat-card__menu">
+                    <mat-icon>more_vert</mat-icon>
+                </button>
+            </div>
+            <div class="stat-card__content">
+                <h3 class="stat-card__value">{{ stat.value }}</h3>
+                <p class="stat-card__title">{{ stat.title }}</p>
+            </div>
+            <div class="stat-card__footer">
+                <span class="stat-card__trend" [class]="'stat-card__trend--' + stat.trend">
+                    <mat-icon>{{ stat.trend === 'up' ? 'trending_up' : stat.trend === 'down' ? 'trending_down' :
+                        'remove' }}</mat-icon>
+                    {{ stat.change }}
+                </span>
+            </div>
+        </div>
+        }
+    </section>
+
+    <!-- Quick Actions -->
+    <section class="quick-actions">
+        <h2 class="section-title">Quick Actions</h2>
+        <div class="quick-actions__grid">
+            @for (action of quickActions; track action.label) {
+            <button class="quick-action-btn" [routerLink]="action.route">
+                <mat-icon>{{ action.icon }}</mat-icon>
+                <span>{{ action.label }}</span>
+            </button>
+            }
+        </div>
+    </section>
+
+    <!-- Recent Issues Table -->
+    <section class="data-section">
+        <div class="section-header">
+            <h2 class="section-title">Recent Issues</h2>
+            <a routerLink="/admin/issues" class="section-link">
+                View All
+                <mat-icon>arrow_forward</mat-icon>
+            </a>
+        </div>
+
+        <div class="table-container">
+            <table mat-table [dataSource]="recentIssues" class="data-table">
+                <!-- Book Title Column -->
+                <ng-container matColumnDef="bookTitle">
+                    <th mat-header-cell *matHeaderCellDef>Book Title</th>
+                    <td mat-cell *matCellDef="let row">
+                        <div class="book-cell">
+                            <div class="book-cell__cover">
+                                <mat-icon>menu_book</mat-icon>
+                            </div>
+                            <span class="book-cell__title">{{ row.bookTitle }}</span>
+                        </div>
+                    </td>
+                </ng-container>
+
+                <!-- User Name Column -->
+                <ng-container matColumnDef="userName">
+                    <th mat-header-cell *matHeaderCellDef>Issued To</th>
+                    <td mat-cell *matCellDef="let row">
+                        <div class="user-cell">
+                            <div class="avatar avatar--sm">{{ row.userName.charAt(0) }}</div>
+                            <span>{{ row.userName }}</span>
+                        </div>
+                    </td>
+                </ng-container>
+
+                <!-- Issue Date Column -->
+                <ng-container matColumnDef="issueDate">
+                    <th mat-header-cell *matHeaderCellDef>Issue Date</th>
+                    <td mat-cell *matCellDef="let row">{{ row.issueDate | date:'MMM d, y' }}</td>
+                </ng-container>
+
+                <!-- Due Date Column -->
+                <ng-container matColumnDef="dueDate">
+                    <th mat-header-cell *matHeaderCellDef>Due Date</th>
+                    <td mat-cell *matCellDef="let row">
+                        <span [class.text-error]="row.status === 'overdue'">
+                            {{ row.dueDate | date:'MMM d, y' }}
+                        </span>
+                    </td>
+                </ng-container>
+
+                <!-- Status Column -->
+                <ng-container matColumnDef="status">
+                    <th mat-header-cell *matHeaderCellDef>Status</th>
+                    <td mat-cell *matCellDef="let row">
+                        <span class="badge" [class]="'badge--' + row.status">
+                            <span class="badge__dot"></span>
+                            {{ row.status | titlecase }}
+                        </span>
+                    </td>
+                </ng-container>
+
+                <!-- Actions Column -->
+                <ng-container matColumnDef="actions">
+                    <th mat-header-cell *matHeaderCellDef></th>
+                    <td mat-cell *matCellDef="let row">
+                        <button mat-icon-button [matMenuTriggerFor]="actionMenu" class="row-action-btn">
+                            <mat-icon>more_horiz</mat-icon>
+                        </button>
+                        <mat-menu #actionMenu="matMenu">
+                            <button mat-menu-item>
+                                <mat-icon>visibility</mat-icon>
+                                <span>View Details</span>
+                            </button>
+                            @if (row.status === 'active' || row.status === 'overdue') {
+                            <button mat-menu-item>
+                                <mat-icon>replay</mat-icon>
+                                <span>Mark as Returned</span>
+                            </button>
+                            }
+                            @if (row.status === 'overdue') {
+                            <button mat-menu-item>
+                                <mat-icon>attach_money</mat-icon>
+                                <span>Calculate Fine</span>
+                            </button>
+                            }
+                        </mat-menu>
+                    </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns" class="table-row"></tr>
+            </table>
+        </div>
+    </section>
+
+    <!-- Activity & Charts Section -->
+    <section class="dashboard-grid">
+        <!-- Recent Activity -->
+        <div class="activity-card card">
+            <div class="card__header">
+                <h3 class="card__title">Recent Activity</h3>
+            </div>
+            <div class="activity-list">
+                <div class="activity-item">
+                    <div class="activity-item__icon activity-item__icon--primary">
+                        <mat-icon>add_circle</mat-icon>
+                    </div>
+                    <div class="activity-item__content">
+                        <p class="activity-item__text">New book <strong>"Introduction to Algorithms"</strong> added</p>
+                        <span class="activity-item__time">2 minutes ago</span>
+                    </div>
+                </div>
+                <div class="activity-item">
+                    <div class="activity-item__icon activity-item__icon--success">
+                        <mat-icon>person_add</mat-icon>
+                    </div>
+                    <div class="activity-item__content">
+                        <p class="activity-item__text"><strong>Emily Davis</strong> registered as new member</p>
+                        <span class="activity-item__time">15 minutes ago</span>
+                    </div>
+                </div>
+                <div class="activity-item">
+                    <div class="activity-item__icon activity-item__icon--warning">
+                        <mat-icon>warning</mat-icon>
+                    </div>
+                    <div class="activity-item__content">
+                        <p class="activity-item__text"><strong>3 books</strong> are overdue today</p>
+                        <span class="activity-item__time">1 hour ago</span>
+                    </div>
+                </div>
+                <div class="activity-item">
+                    <div class="activity-item__icon activity-item__icon--secondary">
+                        <mat-icon>swap_horiz</mat-icon>
+                    </div>
+                    <div class="activity-item__content">
+                        <p class="activity-item__text"><strong>"Clean Code"</strong> returned by John Doe</p>
+                        <span class="activity-item__time">2 hours ago</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Popular Books -->
+        <div class="popular-card card">
+            <div class="card__header">
+                <h3 class="card__title">Popular Books</h3>
+                <span class="card__badge badge badge--accent">This Month</span>
+            </div>
+            <div class="popular-list">
+                <div class="popular-item">
+                    <span class="popular-item__rank">1</span>
+                    <div class="popular-item__cover">
+                        <mat-icon>menu_book</mat-icon>
+                    </div>
+                    <div class="popular-item__info">
+                        <h4 class="popular-item__title">Clean Code</h4>
+                        <p class="popular-item__author">Robert C. Martin</p>
+                    </div>
+                    <span class="popular-item__count">48 issues</span>
+                </div>
+                <div class="popular-item">
+                    <span class="popular-item__rank">2</span>
+                    <div class="popular-item__cover">
+                        <mat-icon>menu_book</mat-icon>
+                    </div>
+                    <div class="popular-item__info">
+                        <h4 class="popular-item__title">Design Patterns</h4>
+                        <p class="popular-item__author">Gang of Four</p>
+                    </div>
+                    <span class="popular-item__count">42 issues</span>
+                </div>
+                <div class="popular-item">
+                    <span class="popular-item__rank">3</span>
+                    <div class="popular-item__cover">
+                        <mat-icon>menu_book</mat-icon>
+                    </div>
+                    <div class="popular-item__info">
+                        <h4 class="popular-item__title">The Pragmatic Programmer</h4>
+                        <p class="popular-item__author">Hunt & Thomas</p>
+                    </div>
+                    <span class="popular-item__count">38 issues</span>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

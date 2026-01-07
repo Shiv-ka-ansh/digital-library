@@ -1,0 +1,433 @@
+// Local variables
+$color-primary: #6366f1;
+$color-primary-light: #e0e7ff;
+$color-primary-dark: #4338ca;
+$color-secondary: #38bdf8;
+$color-text-primary: #0f172a;
+$color-text-secondary: #475569;
+$color-text-muted: #94a3b8;
+$color-background: #f9fafb;
+$color-surface: #ffffff;
+$color-surface-alt: #f1f5f9;
+$color-border: #e5e7eb;
+$color-error: #ef4444;
+
+$font-size-xs: 0.75rem;
+$font-size-sm: 0.875rem;
+$font-size-base: 1rem;
+$font-size-lg: 1.125rem;
+$font-size-xl: 1.25rem;
+$font-size-2xl: 1.5rem;
+$font-weight-medium: 500;
+$font-weight-semibold: 600;
+$font-weight-bold: 700;
+
+$spacing-1: 0.25rem;
+$spacing-2: 0.5rem;
+$spacing-3: 0.75rem;
+$spacing-4: 1rem;
+$spacing-5: 1.25rem;
+$spacing-6: 1.5rem;
+$spacing-10: 2.5rem;
+
+$radius-lg: 0.75rem;
+$radius-xl: 1rem;
+$radius-full: 9999px;
+
+$transition-fast: 120ms ease-out;
+$transition-base: 180ms ease-out;
+
+$user-sidebar-width: 260px;
+$user-sidebar-collapsed: 72px;
+$topbar-height: 64px;
+$content-max-width: 1440px;
+$z-sticky: 200;
+$z-drawer: 400;
+
+.user-layout {
+  display: flex;
+  min-height: 100vh;
+  background: $color-background;
+}
+
+// ============================================
+// SIDEBAR
+// ============================================
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  background: $color-surface;
+  border-right: 1px solid $color-border;
+  display: flex;
+  flex-direction: column;
+  transition: width $transition-base;
+  z-index: $z-drawer;
+  overflow: hidden;
+
+  &--collapsed {
+    .sidebar__header {
+      justify-content: center;
+      padding: $spacing-4 $spacing-3;
+    }
+
+    .sidebar__logo {
+      justify-content: center;
+    }
+
+    .nav-item {
+      justify-content: center;
+      padding: $spacing-3;
+
+      &__icon {
+        margin-right: 0;
+      }
+    }
+  }
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: $spacing-4 $spacing-5;
+    min-height: $topbar-height;
+    border-bottom: 1px solid $color-border;
+  }
+
+  &__logo {
+    display: flex;
+    align-items: center;
+    gap: $spacing-3;
+    text-decoration: none;
+  }
+
+  &__logo-icon {
+    width: 32px;
+    height: 32px;
+    font-size: 32px;
+    color: $color-primary;
+  }
+
+  &__logo-text {
+    font-size: $font-size-lg;
+    font-weight: $font-weight-bold;
+    color: $color-text-primary;
+    white-space: nowrap;
+  }
+
+  &__toggle {
+    color: $color-text-muted;
+    flex-shrink: 0;
+
+    &:hover {
+      color: $color-text-primary;
+    }
+  }
+
+  &__nav {
+    flex: 1;
+    padding: $spacing-4 $spacing-3;
+    overflow-y: auto;
+  }
+
+  &__quick-actions {
+    padding: 0 $spacing-4 $spacing-4;
+  }
+
+  &__footer {
+    padding: $spacing-3;
+
+    mat-divider {
+      margin-bottom: $spacing-3;
+    }
+  }
+}
+
+// ============================================
+// QUICK ACTIONS CARD
+// ============================================
+
+.quick-actions-card {
+  display: flex;
+  align-items: center;
+  gap: $spacing-3;
+  padding: $spacing-4;
+  background: linear-gradient(135deg, $color-primary 0%, darken($color-primary, 10%) 100%);
+  border-radius: $radius-lg;
+  color: white;
+
+  &__icon {
+    width: 40px;
+    height: 40px;
+    background: rgba(white, 0.2);
+    border-radius: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__title {
+    font-size: $font-size-sm;
+    font-weight: $font-weight-semibold;
+  }
+
+  &__subtitle {
+    font-size: $font-size-xs;
+    opacity: 0.8;
+  }
+}
+
+// ============================================
+// NAV ITEMS
+// ============================================
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: $spacing-3;
+  padding: $spacing-3 $spacing-4;
+  margin-bottom: $spacing-1;
+  border-radius: $radius-lg;
+  color: $color-text-secondary;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all $transition-fast;
+  position: relative;
+
+  &:hover {
+    background: $color-surface-alt;
+    color: $color-text-primary;
+  }
+
+  &--active {
+    background: $color-primary-light;
+    color: $color-primary;
+
+    .nav-item__icon {
+      color: $color-primary;
+    }
+
+    &:hover {
+      background: $color-primary-light;
+    }
+  }
+
+  &__icon {
+    width: 22px;
+    height: 22px;
+    font-size: 22px;
+    flex-shrink: 0;
+    transition: color $transition-fast;
+  }
+
+  &__label {
+    font-size: $font-size-sm;
+    font-weight: $font-weight-medium;
+    white-space: nowrap;
+  }
+
+  &__badge {
+    margin-left: auto;
+    background: $color-secondary;
+    color: white;
+    font-size: $font-size-xs;
+    font-weight: $font-weight-semibold;
+    padding: 2px 8px;
+    border-radius: $radius-full;
+    min-width: 20px;
+    text-align: center;
+  }
+}
+
+// ============================================
+// MAIN WRAPPER
+// ============================================
+
+.main-wrapper {
+  flex: 1;
+  margin-left: $user-sidebar-width;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  transition: margin-left $transition-base;
+
+  &--expanded {
+    margin-left: $user-sidebar-collapsed;
+  }
+}
+
+// ============================================
+// TOPBAR
+// ============================================
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  height: $topbar-height;
+  padding: 0 $spacing-6;
+  background: rgba($color-surface, 0.85);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid $color-border;
+  z-index: $z-sticky;
+
+  &__left {
+    display: flex;
+    align-items: center;
+    gap: $spacing-4;
+    flex: 1;
+    max-width: 500px;
+  }
+
+  &__right {
+    display: flex;
+    align-items: center;
+    gap: $spacing-2;
+  }
+
+  &__menu-btn {
+    color: $color-text-secondary;
+  }
+
+  &__search {
+    position: relative;
+    flex: 1;
+    max-width: 400px;
+  }
+
+  &__search-icon {
+    position: absolute;
+    left: $spacing-4;
+    top: 50%;
+    transform: translateY(-50%);
+    color: $color-text-muted;
+    font-size: 20px;
+    pointer-events: none;
+  }
+
+  &__search-input {
+    width: 100%;
+    height: 44px;
+    padding: 0 $spacing-4 0 $spacing-10;
+    background: $color-surface-alt;
+    border: 1.5px solid transparent;
+    border-radius: $radius-xl;
+    font-size: $font-size-sm;
+    color: $color-text-primary;
+    transition: all $transition-fast;
+
+    &::placeholder {
+      color: $color-text-muted;
+    }
+
+    &:hover {
+      background: darken($color-surface-alt, 2%);
+    }
+
+    &:focus {
+      outline: none;
+      background: $color-surface;
+      border-color: $color-primary;
+      box-shadow: 0 0 0 3px rgba($color-primary, 0.1);
+    }
+  }
+
+  &__cta {
+    border-radius: $radius-lg !important;
+
+    mat-icon {
+      margin-right: $spacing-1;
+    }
+  }
+
+  &__action {
+    color: $color-text-secondary;
+
+    &:hover {
+      color: $color-text-primary;
+    }
+  }
+
+  &__user {
+    display: flex;
+    align-items: center;
+    gap: $spacing-2;
+    padding: $spacing-2 $spacing-3;
+    border-radius: $radius-lg;
+    color: $color-text-primary;
+
+    &:hover {
+      background: $color-surface-alt;
+    }
+  }
+
+  &__user-name {
+    font-weight: $font-weight-medium;
+  }
+}
+
+// ============================================
+// MAIN CONTENT
+// ============================================
+
+.main-content {
+  flex: 1;
+  padding: $spacing-6;
+  max-width: $content-max-width;
+  width: 100%;
+  animation: fadeInUp 0.3s ease-out;
+
+  @media (max-width: 767px) {
+    padding: $spacing-4;
+  }
+}
+
+// ============================================
+// MENU HEADER
+// ============================================
+
+.menu-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: $spacing-3 $spacing-4;
+  font-weight: $font-weight-semibold;
+  font-size: $font-size-sm;
+}
+
+// ============================================
+// RESPONSIVE
+// ============================================
+
+@media (max-width: 1023px) {
+  .sidebar {
+    transform: translateX(-100%);
+
+    &--open {
+      transform: translateX(0);
+    }
+  }
+
+  .main-wrapper {
+    margin-left: 0 !important;
+  }
+
+  .topbar__search {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 767px) {
+  .topbar {
+    padding: 0 $spacing-4;
+  }
+}

@@ -1,0 +1,286 @@
+// ============================================
+// DIGITAL LIBRARY - TYPOGRAPHY STYLES
+// ============================================
+
+@use 'variables' as *;
+
+// ============================================
+// BASE TYPOGRAPHY
+// ============================================
+
+body {
+  font-family: $font-family-base;
+  font-size: $font-size-base;
+  font-weight: $font-weight-regular;
+  line-height: $line-height-normal;
+  color: $color-text-primary;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+// ============================================
+// HEADINGS
+// ============================================
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: $font-weight-semibold;
+  line-height: $line-height-tight;
+  letter-spacing: $letter-spacing-tight;
+  color: $color-text-primary;
+  margin: 0;
+}
+
+h1,
+.h1 {
+  font-size: $font-size-4xl;
+  font-weight: $font-weight-bold;
+
+  @media (max-width: $breakpoint-md) {
+    font-size: $font-size-3xl;
+  }
+}
+
+h2,
+.h2 {
+  font-size: $font-size-3xl;
+
+  @media (max-width: $breakpoint-md) {
+    font-size: $font-size-2xl;
+  }
+}
+
+h3,
+.h3 {
+  font-size: $font-size-2xl;
+
+  @media (max-width: $breakpoint-md) {
+    font-size: $font-size-xl;
+  }
+}
+
+h4,
+.h4 {
+  font-size: $font-size-xl;
+}
+
+h5,
+.h5 {
+  font-size: $font-size-lg;
+}
+
+h6,
+.h6 {
+  font-size: $font-size-base;
+  font-weight: $font-weight-medium;
+}
+
+// ============================================
+// BODY TEXT VARIANTS
+// ============================================
+
+.text-body-lg {
+  font-size: $font-size-lg;
+  line-height: $line-height-relaxed;
+}
+
+.text-body {
+  font-size: $font-size-base;
+  line-height: $line-height-normal;
+}
+
+.text-body-sm {
+  font-size: $font-size-sm;
+  line-height: $line-height-normal;
+}
+
+.text-caption {
+  font-size: $font-size-xs;
+  line-height: $line-height-normal;
+  color: $color-text-muted;
+}
+
+.text-overline {
+  font-size: $font-size-xs;
+  font-weight: $font-weight-semibold;
+  letter-spacing: $letter-spacing-wide;
+  text-transform: uppercase;
+  color: $color-text-muted;
+}
+
+// ============================================
+// TEXT COLORS
+// ============================================
+
+.text-primary {
+  color: $color-text-primary;
+}
+
+.text-secondary {
+  color: $color-text-secondary;
+}
+
+.text-muted {
+  color: $color-text-muted;
+}
+
+.text-accent-primary {
+  color: $color-primary;
+}
+
+.text-accent-secondary {
+  color: $color-secondary;
+}
+
+.text-success {
+  color: $color-success;
+}
+
+.text-warning {
+  color: $color-warning;
+}
+
+.text-error {
+  color: $color-error;
+}
+
+// ============================================
+// TEXT ALIGNMENT
+// ============================================
+
+.text-left {
+  text-align: left;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-right {
+  text-align: right;
+}
+
+// ============================================
+// FONT WEIGHTS
+// ============================================
+
+.font-regular {
+  font-weight: $font-weight-regular;
+}
+
+.font-medium {
+  font-weight: $font-weight-medium;
+}
+
+.font-semibold {
+  font-weight: $font-weight-semibold;
+}
+
+.font-bold {
+  font-weight: $font-weight-bold;
+}
+
+// ============================================
+// LINKS
+// ============================================
+
+a {
+  color: $color-primary;
+  text-decoration: none;
+  transition: color $transition-fast;
+
+  &:hover {
+    color: $color-primary-dark;
+  }
+
+  &:focus-visible {
+    outline: 2px solid $color-primary;
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+}
+
+.link-subtle {
+  color: $color-text-secondary;
+
+  &:hover {
+    color: $color-primary;
+  }
+}
+
+// ============================================
+// LISTS
+// ============================================
+
+ul,
+ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.list-styled {
+  padding-left: $spacing-5;
+
+  li {
+    position: relative;
+    margin-bottom: $spacing-2;
+
+    &::before {
+      content: '';
+      position: absolute;
+      left: -$spacing-4;
+      top: 0.6em;
+      width: 6px;
+      height: 6px;
+      background: $color-primary;
+      border-radius: 50%;
+    }
+  }
+}
+
+// ============================================
+// CODE / MONOSPACE
+// ============================================
+
+code,
+kbd,
+pre,
+samp {
+  font-family: $font-family-mono;
+  font-size: 0.875em;
+}
+
+code {
+  background: $color-surface-alt;
+  padding: 0.125em 0.375em;
+  border-radius: $radius-sm;
+  color: $color-primary-dark;
+}
+
+pre {
+  background: $color-text-primary;
+  color: $color-surface;
+  padding: $spacing-4;
+  border-radius: $radius-lg;
+  overflow-x: auto;
+
+  code {
+    background: transparent;
+    padding: 0;
+    color: inherit;
+  }
+}
+
+// ============================================
+// SELECTION
+// ============================================
+
+::selection {
+  background: rgba($color-primary, 0.2);
+  color: $color-text-primary;
+}
